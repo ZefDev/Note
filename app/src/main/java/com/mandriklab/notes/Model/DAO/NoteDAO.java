@@ -1,5 +1,6 @@
 package com.mandriklab.notes.Model.DAO;
 
+import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
@@ -9,6 +10,7 @@ import com.mandriklab.notes.Model.Entity.Note;
 
 import java.util.List;
 
+@Dao
 public interface NoteDAO {
 
     @Query("SELECT * FROM note ORDER BY dateCreating ASC")

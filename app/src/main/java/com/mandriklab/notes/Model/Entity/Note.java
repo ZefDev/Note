@@ -18,10 +18,10 @@ public class Note {
     private String text;
 
     @ColumnInfo(name = "dateCreating")
-    private OffsetDateTime dateCreating;
+    private String dateCreating;
 
     @ColumnInfo(name = "dateChanging")
-    private OffsetDateTime dateChanging;
+    private String dateChanging;
 
     public int getId() {
         return id;
@@ -47,19 +47,19 @@ public class Note {
         this.text = text;
     }
 
-    public OffsetDateTime getDateCreating() {
+    public String getDateCreating() {
         return dateCreating;
     }
 
-    public void setDateCreating(OffsetDateTime dateCreating) {
+    public void setDateCreating(String dateCreating) {
         this.dateCreating = dateCreating;
     }
 
-    public OffsetDateTime getDateChanging() {
+    public String getDateChanging() {
         return dateChanging;
     }
 
-    public void setDateChanging(OffsetDateTime dateChanging) {
+    public void setDateChanging(String dateChanging) {
         this.dateChanging = dateChanging;
     }
 }
