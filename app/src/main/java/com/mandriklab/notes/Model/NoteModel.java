@@ -3,12 +3,20 @@ package com.mandriklab.notes.Model;
 import android.content.ContentValues;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 
 import com.mandriklab.notes.Model.DAO.NoteDAO;
 import com.mandriklab.notes.Model.Entity.Note;
 
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class NoteModel implements NoteDAO {
 
@@ -23,19 +31,31 @@ public class NoteModel implements NoteDAO {
         loadNotes.execute();
     }
 
-    public void addUser(ContentValues contentValues, CompleteCallback callback) {
+    public void addNote(ContentValues contentValues, CompleteCallback callback) {
         AddNote addNote = new AddNote(callback);
         addNote.execute(contentValues);
     }
 
-    public void deleteNote(CompleteCallback completeCallback) {
-        DeleteNote deleteNote = new DeleteNote(completeCallback);
-        deleteNote.execute();
+    public void LoadNoteById(int id, LoadNoteByIdCallback callback){
+        LoadNoteById loadNoteById = new LoadNoteById(callback);
+        loadNoteById.execute(id);
     }
 
+    public void deleteNote(int id,CompleteCallback completeCallback) {
+        DeleteNote deleteNote = new DeleteNote(completeCallback);
+        deleteNote.execute(id);
+    }
+    public void updateNote(ContentValues contentValues,CompleteCallback completeCallback) {
+        UpdateNote updateNote = new UpdateNote(completeCallback);
+        updateNote.execute(contentValues);
+    }
 
     public interface LoadNotesCallback {
         void onLoad(List<Note> notes);
+    }
+
+    public interface LoadNoteByIdCallback{
+        void onLoad(Note note);
     }
 
     public interface CompleteCallback {
@@ -77,6 +97,11 @@ public class NoteModel implements NoteDAO {
         noteDao.delete(note);
     }
 
+    @Override
+    public void deleteById(int id) {
+        noteDao.deleteById(id);
+    }
+
     class LoadNotes extends AsyncTask<Void, Void, List<Note>> {
 
         private final LoadNotesCallback callback;
@@ -85,19 +110,14 @@ public class NoteModel implements NoteDAO {
             this.callback = callback;
         }
 
+
         @Override
         protected List<Note> doInBackground(Void... params) {
-            List<Note> notes = new ArrayList<>();
-            /*Cursor cursor = dbHelper.getReadableDatabase().query(UserTable.TABLE, null, null, null, null, null, null);
-            while (cursor.moveToNext()) {
-                User user = new User();
-                user.setId(cursor.getLong(cursor.getColumnIndex(UserTable.COLUMN.ID)));
-                user.setName(cursor.getString(cursor.getColumnIndex(UserTable.COLUMN.NAME)));
-                user.setEmail(cursor.getString(cursor.getColumnIndex(UserTable.COLUMN.EMAIL)));
-                users.add(user);
-            }
-            cursor.close();*/
-            //Достаём данные из базы
+            Date d = new Date();
+            //SimpleDateFormat ft = new SimpleDateFormat ("E yyyy.MM.dd 'at' hh:mm:ss a zzz");
+            //SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM hh:mm", Locale.ENGLISH);
+
+            List<Note> notes = noteDao.sotringDateByDESC();
             return notes;
         }
 
@@ -105,6 +125,28 @@ public class NoteModel implements NoteDAO {
         protected void onPostExecute(List<Note> notes) {
             if (callback != null) {
                 callback.onLoad(notes);
+            }
+        }
+    }
+
+    class LoadNoteById extends AsyncTask<Integer, Void, Note> {
+
+        private final LoadNoteByIdCallback callback;
+
+        LoadNoteById(LoadNoteByIdCallback callback) {
+            this.callback = callback;
+        }
+
+
+        @Override
+        protected Note doInBackground(Integer... params) {
+            return noteDao.findNoteById(params[0]).get(0);
+        }
+
+        @Override
+        protected void onPostExecute(Note note) {
+            if (callback != null) {
+                callback.onLoad(note);
             }
         }
     }
@@ -119,13 +161,12 @@ public class NoteModel implements NoteDAO {
 
         @Override
         protected Void doInBackground(ContentValues... params) {
-            ContentValues cvUser = params[0];
-            /*dbHelper.getWritableDatabase().insert(UserTable.TABLE, null, cvUser);
-            try {
-                TimeUnit.SECONDS.sleep(1);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }*/
+            ContentValues noteCV = params[0];
+            Note n = new Note();
+            n.setText(noteCV.get("text").toString());
+            n.setDateCreating(noteCV.get("time").toString());
+            n.setDateChanging(noteCV.get("time").toString());
+            noteDao.insertAll(n);
             // Хуярим в базу новую замметку
             return null;
         }
@@ -139,7 +180,37 @@ public class NoteModel implements NoteDAO {
         }
     }
 
-    class DeleteNote extends AsyncTask<Void, Void, Void> {
+    class UpdateNote extends AsyncTask<ContentValues, Void, Void> {
+
+        private final CompleteCallback callback;
+
+        UpdateNote(CompleteCallback callback) {
+            this.callback = callback;
+        }
+
+        @Override
+        protected Void doInBackground(ContentValues... params) {
+            ContentValues noteCV = params[0];
+            Note n = new Note();
+            n.setId(Integer.parseInt(noteCV.get("id").toString()));
+            n.setText(noteCV.get("text").toString());
+            n.setDateCreating(noteCV.get("time").toString());
+            n.setDateChanging(noteCV.get("time").toString());
+            noteDao.updateNote(n);
+            // Хуярим в базу новую замметку
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            if (callback != null) {
+                callback.onComplete();
+            }
+        }
+    }
+
+    class DeleteNote extends AsyncTask<Integer, Void, Void> {
 
         private final CompleteCallback callback;
 
@@ -148,14 +219,8 @@ public class NoteModel implements NoteDAO {
         }
 
         @Override
-        protected Void doInBackground(Void... params) {
-            /*dbHelper.getWritableDatabase().delete(UserTable.TABLE, null, null);
-            try {
-                TimeUnit.SECONDS.sleep(1);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }*/
-            // Нахуй заметку из базы
+        protected Void doInBackground(Integer... params) {
+            noteDao.deleteById(params[0]);
             return null;
         }
 

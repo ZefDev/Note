@@ -25,6 +25,9 @@ public interface NoteDAO {
     @Query("SELECT * FROM note WHERE text LIKE :text")
     Note findByText(String text);
 
+    @Query("DELETE FROM note WHERE id LIKE :id")
+    void deleteById(int id);
+
     @Update
     public void updateNote(Note... notes);
 
@@ -32,5 +35,6 @@ public interface NoteDAO {
     void insertAll(Note... notes);
 
     @Delete
-    void delete(Note site);
+    void delete(Note note);
+
 }
