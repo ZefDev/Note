@@ -8,6 +8,7 @@ import java.time.OffsetDateTime;
 
 @Entity
 public class Note {
+
     @PrimaryKey(autoGenerate = true)
     private int id;
 

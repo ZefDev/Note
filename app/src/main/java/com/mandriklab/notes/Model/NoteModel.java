@@ -50,12 +50,21 @@ public class NoteModel implements NoteDAO {
         updateNote.execute(contentValues);
     }
 
+    public void sortingNode(ContentValues contentValues, SortingNodeCallback callback) {
+        sortingNode sortingNode = new sortingNode(callback);
+        sortingNode.execute(contentValues);
+    }
+
     public interface LoadNotesCallback {
         void onLoad(List<Note> notes);
     }
 
     public interface LoadNoteByIdCallback{
         void onLoad(Note note);
+    }
+
+    public interface SortingNodeCallback{
+        void onLoad(List<Note> notes);
     }
 
     public interface CompleteCallback {
@@ -73,12 +82,27 @@ public class NoteModel implements NoteDAO {
     }
 
     @Override
+    public List<Note> sotringNoteByTextAsc() {
+        return noteDao.sotringNoteByTextAsc();
+    }
+
+    @Override
+    public List<Note> sotringNoteByTextDesc() {
+        return noteDao.sotringNoteByTextDesc();
+    }
+
+    @Override
+    public List<Note> sotringNoteByTitle() {
+        return noteDao.sotringNoteByTitle();
+    }
+
+    @Override
     public List<Note> findNoteById(int id) {
         return noteDao.findNoteById(id);
     }
 
     @Override
-    public Note findByText(String text) {
+    public List<Note> findByText(String text) {
         return noteDao.findByText(text);
     }
 
@@ -151,6 +175,45 @@ public class NoteModel implements NoteDAO {
         }
     }
 
+    class sortingNode extends AsyncTask<ContentValues, Void, List<Note>> {
+
+        private final SortingNodeCallback callback;
+
+        sortingNode(SortingNodeCallback callback) {
+            this.callback = callback;
+        }
+
+
+        @Override
+        protected List<Note> doInBackground(ContentValues... params) {
+            ContentValues cv = params[0];
+            int id = Integer.parseInt(cv.get("id").toString());
+            switch (id) {
+                case 1: // searching by text
+                    return noteDao.findByText("%"+cv.get("string").toString()+"%");
+                case 2: // sorting by text
+                    return noteDao.sotringNoteByTextAsc();
+                case 3:  // sorting by title
+                    return noteDao.sotringNoteByTextDesc();
+                case 4:  // sorting by Asc date creating
+                    return noteDao.sotringDateByASC();
+                case 5:  // sorting by Desc date creating
+                    return noteDao.sotringDateByDESC();
+                case 6:  // sorting by color
+                    //return noteDao.sotringDateByDESC();
+                default: return null;
+            }
+
+        }
+
+        @Override
+        protected void onPostExecute(List<Note> notes) {
+            if (callback != null) {
+                callback.onLoad(notes);
+            }
+        }
+    }
+
     class AddNote extends AsyncTask<ContentValues, Void, Void> {
 
         private final CompleteCallback callback;
@@ -164,6 +227,7 @@ public class NoteModel implements NoteDAO {
             ContentValues noteCV = params[0];
             Note n = new Note();
             n.setText(noteCV.get("text").toString());
+            n.setTitle(noteCV.get("title").toString());
             n.setDateCreating(noteCV.get("time").toString());
             n.setDateChanging(noteCV.get("time").toString());
             noteDao.insertAll(n);
@@ -194,6 +258,7 @@ public class NoteModel implements NoteDAO {
             Note n = new Note();
             n.setId(Integer.parseInt(noteCV.get("id").toString()));
             n.setText(noteCV.get("text").toString());
+            n.setTitle(noteCV.get("title").toString());
             n.setDateCreating(noteCV.get("time").toString());
             n.setDateChanging(noteCV.get("time").toString());
             noteDao.updateNote(n);

@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
@@ -32,6 +33,7 @@ public class MainActivity extends Activity {
     NoteAdapter noteAdapter;
     ListView lvNotes;
     EditText etSearching;
+    public Button btnSortByText,btnSortByDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +45,22 @@ public class MainActivity extends Activity {
     public void Init(){
         lvNotes = (ListView) findViewById(R.id.lvNotes);
         etSearching = (EditText) findViewById(R.id.etSearching);
+        btnSortByText = (Button) findViewById(R.id.btnSortByText);
+        btnSortByDate = (Button) findViewById(R.id.btnSortByDate);
         fab = findViewById(R.id.fab);
+
+        btnSortByDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.filterDate(); // by text
+            }
+        });
+        btnSortByText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.filterText();
+            }
+        });
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -65,8 +82,7 @@ public class MainActivity extends Activity {
         etSearching.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                presenter.filter(1,s); // 1 - by text
-
+                presenter.filter(1,s.toString()); // 1 - by text
             }
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {

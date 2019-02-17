@@ -1,6 +1,7 @@
 package com.mandriklab.notes.Presenter;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 
@@ -51,6 +52,8 @@ public class NotePresenter {
             Date d = new Date();
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM hh:mm", Locale.ENGLISH);
             n.setDateCreating(dateFormat.format(d));
+            n.setTitle("");
+            n.setText("");
             view.showNote(n); // Create new
         }
 
@@ -70,8 +73,9 @@ public class NotePresenter {
     public void addNote() {
         Note note = view.getNoteData();
 
-        ContentValues cv = new ContentValues(2);
+        ContentValues cv = new ContentValues(3);
         cv.put("text", note.getText());
+        cv.put("title", note.getTitle());
         cv.put("time", note.getDateCreating());
         model.addNote(cv, new NoteModel.CompleteCallback() {
             @Override
@@ -83,7 +87,8 @@ public class NotePresenter {
 
     public void updateNote(int id){
         Note note = view.getNoteData();
-        ContentValues cv = new ContentValues(3);
+        ContentValues cv = new ContentValues(4);
+        cv.put("title", note.getTitle());
         cv.put("text", note.getText());
         cv.put("time", note.getDateCreating());
         cv.put("id", id);
@@ -111,5 +116,14 @@ public class NotePresenter {
         else {
             view.finish();
         }
+    }
+
+    public void shareNote(){
+        Note note = view.getNoteData();
+        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+        sharingIntent.setType("text/plain");
+        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Subject Here");
+        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, note.getTitle()+" "+ note.getText());
+        view.startActivity(sharingIntent);
     }
 }

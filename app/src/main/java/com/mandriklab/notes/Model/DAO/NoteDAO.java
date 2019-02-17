@@ -19,11 +19,20 @@ public interface NoteDAO {
     @Query("SELECT * FROM note ORDER BY dateCreating DESC")
     List<Note> sotringDateByDESC();
 
+    @Query("SELECT * FROM note ORDER BY text ASC")
+    List<Note> sotringNoteByTextAsc();
+
+    @Query("SELECT * FROM note ORDER BY text Desc")
+    List<Note> sotringNoteByTextDesc();
+
+    @Query("SELECT * FROM note ORDER BY title")
+    List<Note> sotringNoteByTitle();
+
     @Query("SELECT * FROM note WHERE id=:id")
     List<Note> findNoteById(final int id);
 
-    @Query("SELECT * FROM note WHERE text LIKE :text")
-    Note findByText(String text);
+    @Query("SELECT * FROM note WHERE text LIKE :text OR title LIKE :text")
+    List<Note> findByText(String text);
 
     @Query("DELETE FROM note WHERE id LIKE :id")
     void deleteById(int id);
