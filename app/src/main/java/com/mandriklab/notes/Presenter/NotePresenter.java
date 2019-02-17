@@ -73,10 +73,11 @@ public class NotePresenter {
     public void addNote() {
         Note note = view.getNoteData();
 
-        ContentValues cv = new ContentValues(3);
+        ContentValues cv = new ContentValues(4);
         cv.put("text", note.getText());
         cv.put("title", note.getTitle());
         cv.put("time", note.getDateCreating());
+        cv.put("background", note.getBackground());
         model.addNote(cv, new NoteModel.CompleteCallback() {
             @Override
             public void onComplete() {
@@ -87,10 +88,11 @@ public class NotePresenter {
 
     public void updateNote(int id){
         Note note = view.getNoteData();
-        ContentValues cv = new ContentValues(4);
+        ContentValues cv = new ContentValues(5);
         cv.put("title", note.getTitle());
         cv.put("text", note.getText());
         cv.put("time", note.getDateCreating());
+        cv.put("background", note.getBackground());
         cv.put("id", id);
         model.updateNote(cv, new NoteModel.CompleteCallback() {
             @Override

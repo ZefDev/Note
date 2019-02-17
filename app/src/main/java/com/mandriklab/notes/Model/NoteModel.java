@@ -230,6 +230,7 @@ public class NoteModel implements NoteDAO {
             n.setTitle(noteCV.get("title").toString());
             n.setDateCreating(noteCV.get("time").toString());
             n.setDateChanging(noteCV.get("time").toString());
+            n.setBackground(noteCV.getAsInteger("background"));
             noteDao.insertAll(n);
             // Хуярим в базу новую замметку
             return null;
@@ -261,6 +262,7 @@ public class NoteModel implements NoteDAO {
             n.setTitle(noteCV.get("title").toString());
             n.setDateCreating(noteCV.get("time").toString());
             n.setDateChanging(noteCV.get("time").toString());
+            n.setBackground(noteCV.getAsInteger("background"));
             noteDao.updateNote(n);
             // Хуярим в базу новую замметку
             return null;

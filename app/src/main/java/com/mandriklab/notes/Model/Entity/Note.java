@@ -4,8 +4,6 @@ import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
-import java.time.OffsetDateTime;
-
 @Entity
 public class Note {
 
@@ -23,6 +21,17 @@ public class Note {
 
     @ColumnInfo(name = "dateChanging")
     private String dateChanging;
+
+    public int getBackground() {
+        return background;
+    }
+
+    public void setBackground(int background) {
+        this.background = background;
+    }
+
+    @ColumnInfo(name = "background")
+    private int background;
 
     public int getId() {
         return id;

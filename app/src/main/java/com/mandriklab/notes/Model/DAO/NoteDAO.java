@@ -19,10 +19,10 @@ public interface NoteDAO {
     @Query("SELECT * FROM note ORDER BY dateCreating DESC")
     List<Note> sotringDateByDESC();
 
-    @Query("SELECT * FROM note ORDER BY text ASC")
+    @Query("SELECT * FROM note ORDER BY title ASC")
     List<Note> sotringNoteByTextAsc();
 
-    @Query("SELECT * FROM note ORDER BY text Desc")
+    @Query("SELECT * FROM note ORDER BY title DESC")
     List<Note> sotringNoteByTextDesc();
 
     @Query("SELECT * FROM note ORDER BY title")

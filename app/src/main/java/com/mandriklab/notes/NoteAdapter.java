@@ -53,6 +53,7 @@ public class NoteAdapter extends BaseAdapter {
 
         TextView title = (TextView) rowView.findViewById(R.id.tvNodeTitle);
         TextView date = (TextView) rowView.findViewById(R.id.tvDateNote);
+        TextView tvColor = (TextView) rowView.findViewById(R.id.tvColor);
         final TextView subtitleTextView = (TextView)  rowView.findViewById(R.id.tvNodeText);
 
         final Note notes = (Note) getItem(position);
@@ -60,7 +61,7 @@ public class NoteAdapter extends BaseAdapter {
         title.setText(notes.getTitle());
         subtitleTextView.setText(notes.getText());
         date.setText(notes.getDateChanging());
-
+        tvColor.setBackgroundColor(notes.getBackground());
 
         return rowView;
     }

@@ -2,20 +2,20 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/lyBackgroundNode"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".View.NoteActivity"
-    android:id="@+id/lyBackgroundNode"
-    android:background="@color/white"
     tools:showIn="@layout/activity_note">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:gravity="center_horizontal|center_vertical"
 
-        android:gravity="center_horizontal|center_vertical">
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -26,8 +26,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                >
+                android:orientation="horizontal">
 
                 <Button
                     android:id="@+id/btnBack"
@@ -48,11 +47,11 @@
                     android:id="@+id/btnDone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="15dp"
                     android:layout_weight="3"
                     android:background="@color/white"
                     android:text="Done"
-                    android:textColor="@android:color/black"
-                    android:layout_marginRight="15dp"/>
+                    android:textColor="@android:color/black" />
 
             </LinearLayout>
 
@@ -60,16 +59,16 @@
                 android:id="@+id/etText"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/white"
-                android:layout_marginTop="25dp"
                 android:layout_marginLeft="50dp"
+                android:layout_marginTop="25dp"
                 android:layout_marginRight="50dp"
                 android:layout_marginBottom="50dp"
-                android:ems="100"
-                android:gravity="top|left"
-                android:inputType="textMultiLine"
+                android:background="@color/white"
                 android:descendantFocusability="beforeDescendants"
-                android:focusableInTouchMode="true"/>
+                android:ems="100"
+                android:focusableInTouchMode="true"
+                android:gravity="top|left"
+                android:inputType="textMultiLine" />
 
         </LinearLayout>
 
