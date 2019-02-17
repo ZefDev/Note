@@ -39,4 +39,8 @@ public class MainPresenter {
             }
         });
     }
+
+    public void filter(int code,String string){
+
+    }
 }

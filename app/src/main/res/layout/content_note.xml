@@ -72,7 +72,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_gravity="bottom"
-            android:background="@color/colorPrimary"
+            android:background="@color/white"
             app:itemIconTint="@android:color/background_dark"
             app:itemTextColor="@android:color/background_dark"
             app:labelVisibilityMode="unlabeled"

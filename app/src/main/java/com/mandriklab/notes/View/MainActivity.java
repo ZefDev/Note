@@ -1,15 +1,19 @@
 package com.mandriklab.notes.View;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import com.mandriklab.notes.Model.Entity.Note;
@@ -21,13 +25,13 @@ import com.mandriklab.notes.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity {
 
-    Toolbar toolbar;
     FloatingActionButton fab;
     private MainPresenter presenter;
     NoteAdapter noteAdapter;
     ListView lvNotes;
+    EditText etSearching;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,9 +41,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void Init(){
-        toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
         lvNotes = (ListView) findViewById(R.id.lvNotes);
+        etSearching = (EditText) findViewById(R.id.etSearching);
         fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,6 +62,22 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        etSearching.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                presenter.filter(1,s); // 1 - by text
+
+            }
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // TODO Auto-generated method stub
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+                // TODO Auto-generated method stub
+            }
+        });
+
 
         noteAdapter = new NoteAdapter();
         NoteModel model = new NoteModel(this);
@@ -67,23 +86,6 @@ public class MainActivity extends AppCompatActivity {
         presenter.viewIsReady();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
     @Override
     protected void onStart(){
         super.onStart();
