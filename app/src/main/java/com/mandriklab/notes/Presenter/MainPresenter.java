@@ -45,6 +45,10 @@ public class MainPresenter {
         });
     }
 
+    public void filterColor(int Color){
+        filter(6, String.valueOf(Color));
+    }
+
     public void filterDate(){
         Drawable.ConstantState dr = view.btnSortByDate.getBackground().getConstantState();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

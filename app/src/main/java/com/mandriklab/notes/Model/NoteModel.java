@@ -122,6 +122,11 @@ public class NoteModel implements NoteDAO {
     }
 
     @Override
+    public List<Note> sotringByColor(int color) {
+        return noteDao.sotringByColor(color);
+    }
+
+    @Override
     public void deleteById(int id) {
         noteDao.deleteById(id);
     }
@@ -200,8 +205,9 @@ public class NoteModel implements NoteDAO {
                 case 5:  // sorting by Desc date creating
                     return noteDao.sotringDateByDESC();
                 case 6:  // sorting by color
-                    //return noteDao.sotringDateByDESC();
-                default: return null;
+                    return noteDao.sotringByColor(Integer.parseInt(cv.get("string").toString()));
+                default:
+                    return null;
             }
 
         }

@@ -26,6 +26,8 @@ import com.mandriklab.notes.R;
 import java.util.ArrayList;
 import java.util.List;
 
+import petrov.kristiyan.colorpicker.ColorPicker;
+
 public class MainActivity extends Activity {
 
     FloatingActionButton fab;
@@ -33,7 +35,7 @@ public class MainActivity extends Activity {
     NoteAdapter noteAdapter;
     ListView lvNotes;
     EditText etSearching;
-    public Button btnSortByText,btnSortByDate;
+    public Button btnSortByText,btnSortByDate,btnSortByColor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +49,7 @@ public class MainActivity extends Activity {
         etSearching = (EditText) findViewById(R.id.etSearching);
         btnSortByText = (Button) findViewById(R.id.btnSortByText);
         btnSortByDate = (Button) findViewById(R.id.btnSortByDate);
+        btnSortByColor = (Button) findViewById(R.id.btnSortByColor);
         fab = findViewById(R.id.fab);
 
         btnSortByDate.setOnClickListener(new View.OnClickListener() {
@@ -55,6 +58,15 @@ public class MainActivity extends Activity {
                 presenter.filterDate(); // by text
             }
         });
+
+        btnSortByColor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                initColorPicker();
+                 // by color
+            }
+        });
+
         btnSortByText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -100,6 +112,30 @@ public class MainActivity extends Activity {
         presenter = new MainPresenter(model);
         presenter.attachView(this);
         presenter.viewIsReady();
+    }
+
+    public void initColorPicker(){
+        final ColorPicker colorPicker = new ColorPicker(MainActivity.this);
+
+        colorPicker.setColumns(5);
+        colorPicker.setRoundColorButton(true);
+
+        colorPicker.setOnChooseColorListener(new ColorPicker.OnChooseColorListener() {
+            @Override
+            public void onChooseColor(int position,int color) {
+                // filtr by color;
+                if(position!=-1) {
+                    presenter.filterColor(color);
+                }
+            }
+
+            @Override
+            public void onCancel(){
+                presenter.filter(5,"");
+                colorPicker.dismissDialog();
+            }
+        });
+        colorPicker.show();
     }
 
     @Override

@@ -50,7 +50,7 @@ public class NotePresenter {
         else {
             Note n = new Note();
             Date d = new Date();
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM hh:mm", Locale.ENGLISH);
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM hh:mm:ss", Locale.ENGLISH);
             n.setDateCreating(dateFormat.format(d));
             n.setTitle("");
             n.setText("");

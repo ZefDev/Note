@@ -20,10 +20,11 @@
                 android:layout_height="match_parent">
 
                 <Button
-                    android:id="@+id/button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Button" />
+                    android:id="@+id/btnSortByColor"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/color" />
 
                 <TextView
                     android:id="@+id/textView"
@@ -37,14 +38,16 @@
 
                 <Button
                     android:id="@+id/btnSortByText"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_margin="5dp"
                     android:background="@drawable/sort_by" />
 
                 <Button
                     android:id="@+id/btnSortByDate"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_margin="5dp"
                     android:background="@drawable/arrow_asc_date" />
 
             </TableRow>

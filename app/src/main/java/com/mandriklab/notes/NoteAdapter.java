@@ -2,8 +2,10 @@ package com.mandriklab.notes;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.net.Uri;
 import android.os.Build;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.PopupMenu;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -53,15 +55,19 @@ public class NoteAdapter extends BaseAdapter {
 
         TextView title = (TextView) rowView.findViewById(R.id.tvNodeTitle);
         TextView date = (TextView) rowView.findViewById(R.id.tvDateNote);
-        TextView tvColor = (TextView) rowView.findViewById(R.id.tvColor);
+        FloatingActionButton tvColor = (FloatingActionButton) rowView.findViewById(R.id.tvColor);
         final TextView subtitleTextView = (TextView)  rowView.findViewById(R.id.tvNodeText);
 
         final Note notes = (Note) getItem(position);
-
+        String text = notes.getText();
+        text = text.replace("\n", "");
         title.setText(notes.getTitle());
-        subtitleTextView.setText(notes.getText());
-        date.setText(notes.getDateChanging());
-        tvColor.setBackgroundColor(notes.getBackground());
+        subtitleTextView.setText(text);
+
+
+
+        date.setText( notes.getDateChanging());
+        tvColor.setBackgroundTintList(ColorStateList.valueOf(notes.getBackground()));
 
         return rowView;
     }

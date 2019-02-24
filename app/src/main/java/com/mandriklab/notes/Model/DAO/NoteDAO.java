@@ -46,4 +46,6 @@ public interface NoteDAO {
     @Delete
     void delete(Note note);
 
+    @Query("SELECT * FROM note WHERE background=:color")
+    List<Note> sotringByColor(int color);
 }
