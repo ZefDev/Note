@@ -5,4 +5,5 @@
     <string name="share" />
     <string name="color_note" />
     <string name="delete" />
+    <string name="title_activity_splash">splash</string>
 </resources>
