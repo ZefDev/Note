@@ -127,6 +127,11 @@ public class NoteModel implements NoteDAO {
     }
 
     @Override
+    public List<Note> findAllNote() {
+        return null;
+    }
+
+    @Override
     public void deleteById(int id) {
         noteDao.deleteById(id);
     }

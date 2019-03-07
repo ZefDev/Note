@@ -45,6 +45,7 @@ public class NoteActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note);
         Init();
+
     }
 
     public void Init(){
