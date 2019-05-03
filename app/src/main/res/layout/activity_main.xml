@@ -42,7 +42,6 @@
                     android:layout_height="35dp"
                     android:layout_margin="5dp"
                     android:background="@drawable/sort_by"
-                    android:drawableStart="@drawable/sort_by"
                     android:paddingRight="15dp" />
 
                 <Button
