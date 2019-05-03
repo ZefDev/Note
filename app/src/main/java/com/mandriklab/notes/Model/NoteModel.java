@@ -126,10 +126,10 @@ public class NoteModel implements NoteDAO {
         return noteDao.sotringByColor(color);
     }
 
-    @Override
+    /*@Override
     public List<Note> findAllNote() {
         return null;
-    }
+    }*/
 
     @Override
     public void deleteById(int id) {

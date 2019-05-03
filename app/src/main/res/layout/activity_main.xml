@@ -41,14 +41,17 @@
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:layout_margin="5dp"
-                    android:background="@drawable/sort_by" />
+                    android:background="@drawable/sort_by"
+                    android:drawableStart="@drawable/sort_by"
+                    android:paddingRight="15dp" />
 
                 <Button
                     android:id="@+id/btnSortByDate"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:layout_margin="5dp"
-                    android:background="@drawable/arrow_asc_date" />
+                    android:background="@drawable/arrow_asc_date"
+                    android:paddingRight="15dp" />
 
             </TableRow>
 
@@ -71,7 +74,7 @@
 
     <include layout="@layout/content_main" />
 
-    <!--<android.support.design.widget.FloatingActionButton
+    <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -79,7 +82,7 @@
         android:layout_margin="@dimen/fab_margin"
         android:tint="@color/white"
         app:backgroundTint="@color/colorPrimary"
-        app:srcCompat="@drawable/add" />-->
+        app:srcCompat="@drawable/add" />
 
 
 </android.support.design.widget.CoordinatorLayout>

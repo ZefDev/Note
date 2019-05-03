@@ -6,10 +6,10 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
-import com.mandriklab.notes.Model.Entity.Category;
+//import com.mandriklab.notes.Model.Entity.Category;
 
 import java.util.List;
-
+/*
 @Dao
 public interface CategoryDAO {
 
@@ -30,4 +30,4 @@ public interface CategoryDAO {
 
     @Delete
     void delete(Category category);
-}
+}*/

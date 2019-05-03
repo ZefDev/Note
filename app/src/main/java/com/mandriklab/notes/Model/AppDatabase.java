@@ -6,10 +6,10 @@ import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 
 import com.mandriklab.notes.Model.DAO.NoteDAO;
-import com.mandriklab.notes.Model.Entity.Category;
+//import com.mandriklab.notes.Model.Entity.Category;
 import com.mandriklab.notes.Model.Entity.Note;
 
-@Database(entities = {Note.class, Category.class}, version = 1)
+@Database(entities = {Note.class}, version = 2)
 public abstract class AppDatabase extends RoomDatabase {
     private static AppDatabase appDatabase = null;
 

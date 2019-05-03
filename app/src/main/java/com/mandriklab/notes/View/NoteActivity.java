@@ -3,6 +3,7 @@ package com.mandriklab.notes.View;
 import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
@@ -13,6 +14,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -49,6 +52,16 @@ public class NoteActivity extends Activity {
     }
 
     public void Init(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+
+
+            window.setStatusBarColor(getResources().getColor(R.color.colorPrimary));
+        }
+
         btnDone = (Button) findViewById(R.id.btnDone);
         btnBack = (Button) findViewById(R.id.btnBack);
         tvDateNote = (TextView) findViewById(R.id.tvDateNote);
@@ -64,7 +77,12 @@ public class NoteActivity extends Activity {
         btnDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                notePresenter.saveNote();
+                if (!etText.getText().toString().trim().isEmpty()) {
+                    notePresenter.saveNote();
+                }
+                else {
+                    finish();
+                }
             }
         });
         bottomNavigation.setOnNavigationItemSelectedListener(

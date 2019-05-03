@@ -49,6 +49,6 @@ public interface NoteDAO {
     @Query("SELECT * FROM note WHERE background=:color")
     List<Note> sotringByColor(int color);
 
-    @Query("SELECT Note.*, Category.* FROM Note INNER JOIN Category ON Note.categoryId = Category.id")
-    List<Note> findAllNote();
+   // @Query("SELECT Note.*, Category.* FROM Note INNER JOIN Category ON Note.categoryId = Category.id")
+   // List<Note> findAllNote();
 }
